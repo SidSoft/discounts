@@ -454,6 +454,15 @@
                             </select>
                         </div>
                     </div>
+                    <div class="field">
+                        <div class="name">[`Применять скидки`]</div>
+                        <div class="value no-shift">
+                            <select id="apply_discount" name="apply_discount">
+                                <option value="0" {if ($apply_discount == '0')} selected="selected"{/if}>[`Скидки не применяются`]</option>
+                                <option value="1"{if ($apply_discount == '1')} selected="selected"{/if}>[`Скидки применяются`]</option>
+                            </select>
+                        </div>
+                    </div>
                 {/if}
                 <div class="field">
                     <input type="text" name="product[categories.deleted]" value="" style="display:none;">

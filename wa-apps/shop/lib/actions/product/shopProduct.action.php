@@ -209,6 +209,9 @@ class shopProductAction extends waViewAction
             $type['sku_type'] = empty($features_selectable_types[$type_id]) ? shopProductModel::SKU_TYPE_FLAT : shopProductModel::SKU_TYPE_SELECTABLE;
         }
 
+        $apply_discount = !isset($product->params['apply_discount']) ? 1 : $product->params['apply_discount'];
+	    $this->view->assign('apply_discount', $apply_discount);
+
         $this->view->assign('features', $features_selectable);
         $this->view->assign('features_counts', $counts);
 

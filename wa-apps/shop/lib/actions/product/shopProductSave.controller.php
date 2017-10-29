@@ -86,9 +86,26 @@ class shopProductSaveController extends waJsonController
             $data['features_selectable'] = array();
         }
 
-
         try {
             $product = new shopProduct($id);
+
+//	        $model = new waModel();
+//
+//	        $sql = "SELECT * FROM `shop_product_params` WHERE `product_id`=$id";
+//	        waLog::log($sql, 'discount.log');
+//	        if ($model->query($sql)->count() > 0) {
+//		        $sql = "UPDATE shop_product_params SET `value`='$apply_discount' WHERE product_id=$id AND `name`='apply_discount'";
+//		        $res = $model->exec($sql);
+//		        waLog::log($sql, 'discount.log');
+//		        waLog::log(var_export($res,true), 'discount.log');
+//	        } else {
+//		        $sql = "INSERT INTO `shop_product_params` (`product_id`, `name`, `value`) VALUES ($id, 'apply_discount', '$apply_discount')";
+//		        waLog::log($sql, 'discount.log');
+//		        $res = $model->exec($sql);
+//		        waLog::log(var_export($res,true), 'discount.log');
+//	        }
+//	        waLog::log(var_export($product,true), 'discount.log');
+
 
             // for logging changes in stocks
             shopProductStocksLogModel::setContext(shopProductStocksLogModel::TYPE_PRODUCT);
@@ -185,6 +202,12 @@ class shopProductSaveController extends waJsonController
                 }
 
                 $this->response['storefront_map'] = $product_model->getStorefrontMap($product->id);
+
+	            $apply_discount = waRequest::post('apply_discount');
+	            $params = $product->params ? $product->params : array();
+	            $params['apply_discount'] = $apply_discount;
+	            $product->params = $params;
+	            $product->save();
 
             }
         } catch (Exception $ex) {
